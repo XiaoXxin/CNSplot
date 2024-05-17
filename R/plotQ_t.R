@@ -40,12 +40,12 @@ plotQ_t <- function(file, genes, groups, title, fill, label.group, size.p = 2, a
                 n = length(rq),
                 sd = sd(rq),
                 sem = sd/sqrt(n)) %>%
-      mutate(gene = unique(x$gene))
+      dplyr::mutate(gene = unique(x$gene))
   }) %>% Reduce(rbind,.)
 
 
   res_t <- lapply(exp_sub, function(x) {
-    t_test(x, rq ~ group)
+    rstatix::t_test(x, rq ~ group)
   }) %>% Reduce(rbind,.)
 
   res_t <- data.frame(p = paste0("p = ", res_t$p),

@@ -44,12 +44,12 @@ plotFC_2group <- function(file_con, file_test,
 
 
   exp1 <- read.csv(file = file_con, sep = ",", header = T, fill = T) %>%
-    add_column(sample = label_con) %>%
+    tibble::add_column(sample = label_con) %>%
     subset(select = c("sample", channel)) %>%
     magrittr::set_colnames(c("sample", "exp"))
 
   exp2 <- read.csv(file = file_test, sep = ",", header = T, fill = T) %>%
-    add_column(sample = label_test) %>%
+    tibble::add_column(sample = label_test) %>%
     subset(select = c("sample", channel)) %>%
     magrittr::set_colnames(c("sample", "exp"))
 
