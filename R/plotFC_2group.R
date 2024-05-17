@@ -76,13 +76,13 @@ plotFC_2group <- function(file_con, file_test,
     guides(color = legend, fill = legend)+
     scale_x_log10(expand = c(0,0),
                   limits = c(xlims[1], xlims[2]),
-                  breaks = breaks_log(n = 7, base = 10),
-                  labels = label_log(base = 10),
+                  breaks = scales::breaks_log(n = 7, base = 10),
+                  labels = scales::label_log(base = 10),
                   guide = "axis_logticks")+
     scale_y_continuous(expand = c(0,0),
                        limits = c(0,1.1),
                        breaks = seq(0,1, 0.2),
-                       labels = label_percent(suffix = ""))+
+                       labels = scales::label_percent(suffix = ""))+
     scale_fill_manual(values = fills)+
     scale_color_manual(values = colors)+
     theme_bw()+
