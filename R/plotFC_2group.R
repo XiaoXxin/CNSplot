@@ -76,7 +76,7 @@ plotFC_2group <- function(file_con, file_test,
     guides(color = legend, fill = legend)+
     scale_x_log10(expand = c(0,0),
                   limits = c(xlims[1], xlims[2]),
-                  breaks = scales::breaks_log(n = 7, base = 10),
+                  breaks = scales::breaks_log(n = breaks, base = 10),
                   labels = scales::label_log(base = 10),
                   guide = "axis_logticks")+
     scale_y_continuous(expand = c(0,0),
