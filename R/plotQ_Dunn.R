@@ -31,7 +31,7 @@ plotQ_Dunn <- function(file, gene, geneLabel, fill, groups, comparison, style){
   exp_sub$rq <- exp_sub$rq/mean_ctrl
 
   # stat
-  res_dunn <- dunn_test(exp_sub, rq ~ group)
+  res_dunn <- rstatix::dunn_test(exp_sub, rq ~ group)
   res_dunn <- res_dunn[res_dunn$group1 == groups[1],]
   res_dunn <- res_dunn[match(groups[comparison], res_dunn$group2),]
   res_dunn$ppos <- (1+comparison)/2
@@ -50,8 +50,8 @@ plotQ_Dunn <- function(file, gene, geneLabel, fill, groups, comparison, style){
   }
 
   exp_sum <- exp_sub %>%
-    group_by(group) %>%
-    summarise(mean = mean(rq),
+    dplyr::group_by(group) %>%
+    dplyr::summarise(mean = mean(rq),
               n = length(rq),
               sd = sd(rq),
               sem = sd/sqrt(n))

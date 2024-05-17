@@ -16,6 +16,7 @@ Imports:
     magrittr,
     rstatix,
     scales,
+    stats,
     tibble
 Suggests: 
     testthat (>= 3.0.0)

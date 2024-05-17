@@ -31,8 +31,8 @@ plotQ_Tukey <- function(file, gene, geneLabel, fill, groups, comparison, style){
   exp_sub$rq <- exp_sub$rq/mean_ctrl
 
   # stat
-  res_aov <- aov(rq ~ group, data = exp_sub)
-  res_tukey <- tukey_hsd(res_aov)
+  res_aov <- stats::aov(rq ~ group, data = exp_sub)
+  res_tukey <- rstatix::tukey_hsd(res_aov)
   res_tukey$groups <- paste(res_tukey$group1, res_tukey$group2, sep = "-")
 
   res_tukey <- lapply(comparison, function(x) {
@@ -55,8 +55,8 @@ plotQ_Tukey <- function(file, gene, geneLabel, fill, groups, comparison, style){
   }
 
   exp_sum <- exp_sub %>%
-    group_by(group) %>%
-    summarise(mean = mean(rq),
+    dplyr::group_by(group) %>%
+    dplyr::summarise(mean = mean(rq),
               n = length(rq),
               sd = sd(rq),
               sem = sd/sqrt(n))

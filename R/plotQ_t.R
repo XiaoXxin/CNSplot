@@ -35,8 +35,8 @@ plotQ_t <- function(file, genes, groups, title, fill, label.group, size.p = 2, a
 
 
   exp_sum <- lapply(exp_sub, function(x) {
-    group_by(x, group) %>%
-      summarise(mean = mean(rq),
+    dplyr::group_by(x, group) %>%
+      dplyr::summarise(mean = mean(rq),
                 n = length(rq),
                 sd = sd(rq),
                 sem = sd/sqrt(n)) %>%
