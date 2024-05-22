@@ -1,6 +1,6 @@
 Package: CNSplot
 Title: CNSplot
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: 
     person("Yuxin", "Wang", , "541552695@qq.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-3245-6665"))

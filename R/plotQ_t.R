@@ -13,7 +13,11 @@
 #' @export
 #'
 #' @examples
-plotQ_t <- function(file, genes, groups, title, fill, label.group, size.p = 2, angle.p = 45){
+plotQ_t <- function(file, genes, groups, title, fill, label.group,
+                    size.p = 2, size.text.x = 4, size.text.y = 3,
+                    vjust.p = -0.5, hjust.p = 0.5,
+                    angle.p = 0,
+                    scale.y = 1.3){
 
   exp <- read.table(file = file, sep = "\t", header = T, fill = T)
   exp <- data.frame(sample = exp$Sample.Name, gene = exp$Target.Name, rq = exp$RQ)
@@ -75,17 +79,19 @@ plotQ_t <- function(file, genes, groups, title, fill, label.group, size.p = 2, a
       geom_segment(data = res_t, aes(x = 1, xend = 2, y = max*1.05, yend = max*1.05),
                    linewidth = 0.3, inherit.aes = F)+
       geom_text(data = res_t, aes(x = 1.5, y = max*1.05, label = p),
-                size = size.p, vjust = -0.5, hjust = 0.5, nudge_x = 0, angle = angle.p, inherit.aes = F)+
+                size = size.p, vjust = vjust.p, hjust = hjust.p, nudge_x = 0, angle = angle.p, inherit.aes = F)+
       ggtitle(title)+
       guides(fill = "none")+
-      scale_y_continuous(expand = c(0,0), limits = c(0,max*1.3))+
+      scale_y_continuous(expand = c(0,0), limits = c(0,max*scale.y))+
       scale_x_discrete(expand = c(0,0))+
       scale_fill_manual(values = fill, labels = label.group)+
       labs(x= "", y = "Relative mRNA expression")+
       theme_bw()+
       theme(legend.title = element_blank(),
             plot.title = element_text(hjust = 0.5),
-            panel.grid = element_blank())
+            panel.grid = element_blank(),
+            axis.text.x = element_text(size = size.text.x),
+            axis.text.y = element_text(size = size.text.y))
   }else{
     p <- ggplot(exp_sum, aes(x = gene, y = mean, fill = group))+
       geom_bar(position = position_dodge(1), stat = "identity", color = "black", alpha = 0.6, width=0.6)+
@@ -96,16 +102,18 @@ plotQ_t <- function(file, genes, groups, title, fill, label.group, size.p = 2, a
       geom_segment(data = res_t, aes(x = line.x, xend = line.x.end, y = max*1.05, yend = max*1.05),
                    linewidth = 0.3, inherit.aes = F)+
       geom_text(data = res_t, aes(x = x, y = max*1.05, label = p),
-                size = size.p, vjust = -0.5, hjust = 0, nudge_x = 0, angle = angle.p, inherit.aes = F)+
+                size = size.p, vjust = vjust.p, hjust = hjust.p, nudge_x = 0, angle = angle.p, inherit.aes = F)+
       ggtitle(title)+
-      scale_y_continuous(expand = c(0,0), limits = c(0,max*1.3))+
+      scale_y_continuous(expand = c(0,0), limits = c(0,max*scale.y))+
       scale_x_discrete(expand = c(0,0))+
       scale_fill_manual(values = fill, labels = label.group)+
       labs(x= "", y = "Relative mRNA expression")+
       theme_bw()+
       theme(legend.title = element_blank(),
             plot.title = element_text(hjust = 0.5),
-            panel.grid = element_blank())
+            panel.grid = element_blank(),
+            axis.text.x = element_text(size = size.text.x),
+            axis.text.y = element_text(size = size.text.y))
   }
 
 
