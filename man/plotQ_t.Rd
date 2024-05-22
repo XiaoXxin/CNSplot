@@ -12,7 +12,12 @@ plotQ_t(
   fill,
   label.group,
   size.p = 2,
-  angle.p = 45
+  size.text.x = 4,
+  size.text.y = 3,
+  vjust.p = -0.5,
+  hjust.p = 0.5,
+  angle.p = 0,
+  scale.y = 1.3
 )
 }
 \arguments{
@@ -30,7 +35,17 @@ plotQ_t(
 
 \item{size.p}{font size for p value}
 
+\item{size.text.x}{font size for x-axis text}
+
+\item{size.text.y}{font size for y-axis text}
+
+\item{vjust.p}{vjust for p value}
+
+\item{hjust.p}{hjust for p value}
+
 \item{angle.p}{angle for p value}
+
+\item{scale.y}{y scale}
 }
 \value{
 a ggplot2 bar plot

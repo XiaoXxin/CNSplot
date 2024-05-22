@@ -8,6 +8,11 @@
 #' @param label.group group labels
 #' @param size.p font size for p value
 #' @param angle.p angle for p value
+#' @param size.text.x font size for x-axis text
+#' @param size.text.y font size for y-axis text
+#' @param vjust.p vjust for p value
+#' @param hjust.p hjust for p value
+#' @param scale.y y scale
 #'
 #' @return a ggplot2 bar plot
 #' @export
