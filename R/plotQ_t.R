@@ -48,12 +48,13 @@ plotQ_t <- function(file, genes, groups, title, fill, label.group, size.p = 2, a
     rstatix::t_test(x, rq ~ group)
   }) %>% Reduce(rbind,.)
 
-  res_t <- data.frame(p = paste0("p = ", res_t$p),
+  res_t <- data.frame(p = res_t$p,
                       x = 1:nrow(res_t),
                       line.x = 1:nrow(res_t)-0.25,
                       line.x.end = 1:nrow(res_t)+0.25)
 
-
+  res_t$p[res_t$p < 0.001] <- "p < 0.001"
+  res_t$p[res_t$p >= 0.001] <- paste0("p = ", res_t$p[res_t$p >= 0.001])
 
   exp_sub <- Reduce(rbind,exp_sub)
 
