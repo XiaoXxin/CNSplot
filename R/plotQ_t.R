@@ -53,8 +53,13 @@ plotQ_t <- function(file, genes, groups, title, fill, label.group, size.p = 2, a
                       line.x = 1:nrow(res_t)-0.25,
                       line.x.end = 1:nrow(res_t)+0.25)
 
-  res_t$p[res_t$p < 0.001] <- "p < 0.001"
-  res_t$p[res_t$p >= 0.001] <- paste0("p = ", res_t$p[res_t$p >= 0.001])
+  for (i in 1:nrow(res_t)) {
+    if(res_t$p[i] < 0.001){
+      res_t$p[i] <- "p < 0.001"
+    }else{
+      res_t$p[i] <- paste0("p = ", res_t$p[i])
+    }
+  }
 
   exp_sub <- Reduce(rbind,exp_sub)
 
