@@ -45,7 +45,7 @@ plotFC_multi <- function(files,
 
   sum <- exps %>%
     dplyr::group_by(sample) %>%
-    summarise::summarise(MFI = mean(exp))
+    dplyr::summarise(MFI = mean(exp))
 
 
   exps$sample <- factor(exps$sample, levels = rev(labels))
