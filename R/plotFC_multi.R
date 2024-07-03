@@ -51,8 +51,8 @@ plotFC_multi <- function(files,
   exps$sample <- factor(exps$sample, levels = rev(labels))
   labelMeta <- data.frame(label = labels, x = label.x)
 
-  p <- ggplot(exps, aes(x = exp, y = sample, fill = sample)) +
-    ggridges::geom_density_ridges(aes(height = after_stat(scaled)),
+  p <- ggplot(exps, aes(x = exp, y = sample)) +
+    ggridges::geom_density_ridges(aes(height = after_stat(scaled), fill = sample),
                         stat = "density",
                         scale = 0.9,
                         alpha = alpha,
