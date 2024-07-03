@@ -2,6 +2,7 @@
 
 export(plotFC_1group)
 export(plotFC_2group)
+export(plotFC_multi)
 export(plotQ_Dunn)
 export(plotQ_Tukey)
 export(plotQ_t)
