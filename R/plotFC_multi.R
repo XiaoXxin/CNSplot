@@ -11,6 +11,7 @@
 #' @param colors colors
 #' @param alpha alpha
 #' @param fixed_ratio ratio of the x axis and y axis
+#' @param pos.label position of labels
 #'
 #' @return a ggplot2 density plot
 #' @export
@@ -20,6 +21,7 @@
 #'
 plotFC_multi <- function(files,
                          labels,
+                         pos.label = 0.3,
                          channel,
                          xlims,
                          title = "xxx",
@@ -28,7 +30,7 @@ plotFC_multi <- function(files,
 
 
   breaks <- xlims[2]-xlims[1]+1
-  label.x <- 10^(xlims[1]+0.3)
+  label.x <- 10^(xlims[1]+pos.label)
   xlims <- 10^xlims
 
   expList <- list()
