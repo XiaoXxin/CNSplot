@@ -55,6 +55,7 @@ plotFC_multi <- function(files,
     ggridges::geom_density_ridges(aes(height = after_stat(scaled)),
                         stat = "density",
                         scale = 0.9,
+                        alpha = alpha,
                         adjust =1/2,
                         rel_min_height = 0) +
     scale_x_log10(expand = c(0,0),
