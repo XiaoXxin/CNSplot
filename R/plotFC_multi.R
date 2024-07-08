@@ -54,12 +54,12 @@ plotFC_multi <- function(files,
   labelMeta <- data.frame(label = labels, x = label.x)
 
   p <- ggplot(exps, aes(x = exp, y = sample)) +
-    ggridges::geom_density_ridges(aes(height = after_stat(scaled), fill = sample),
-                        stat = "density",
-                        scale = 0.9,
-                        alpha = alpha,
-                        adjust =1/2,
-                        rel_min_height = 0) +
+    ggridges::geom_density_ridges(aes(height = after_stat(scaled), fill = sample, color = sample),
+                                  stat = "density",
+                                  scale = 0.9,
+                                  alpha = alpha,
+                                  adjust =1/2,
+                                  rel_min_height = 0) +
     scale_x_log10(expand = c(0,0),
                   limits = c(xlims[1], xlims[2]),
                   breaks = scales::breaks_log(n = breaks, base = 10),
@@ -67,7 +67,8 @@ plotFC_multi <- function(files,
                   guide = "axis_logticks")+
     scale_y_discrete(expand = c(0, 0,0, 1))+
     scale_fill_manual(values = fills)+
-    geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = label), nudge_y = 0.8, inherit.aes = F)+
+    scale_color_manual(values = colors)+
+    geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = label), hjust = 0, nudge_y = 0.8, inherit.aes = F)+
     ggtitle(title)+
     theme_bw()+
     theme(legend.title = element_blank(),

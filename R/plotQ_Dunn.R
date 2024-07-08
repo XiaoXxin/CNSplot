@@ -13,22 +13,36 @@
 #'
 #' @examples
 plotQ_Dunn <- function(file, gene, geneLabel, fill, groups, comparison, style){
-  require(rstatix)
-  require(tidyverse)
 
   # load data
   exp <- read.table(file = file, sep = "\t", header = T, fill = T)
-  exp <- data.frame(sample = exp$Sample.Name, gene = exp$Target.Name, rq = exp$RQ)
+  exp <- data.frame(group = exp$Sample.Name, gene = exp$Target.Name, ct = exp$CT)
   exp <- na.omit(exp)
-  exp$group <- gsub("_.*", "", exp$sample)
+
+  expList <- split(exp, ~group)
+  expList <- lapply(expList, function(x) {
+    ct_mean_ctrl <- mean(x$ct[x$gene == gene_ctrl])
+    x <- x[x$gene != gene_ctrl,]
+    x$dct <- x$ct- ct_mean_ctrl
+    x
+  })
+  expList <- Reduce(rbind, expList)
+
+  expList <- expList <- split(expList, ~gene)
+  expList <- lapply(expList, function(y) {
+    dct_mean_ctrl <- mean(y$dct[y$group == sample_ctrl])
+    y$ddct <- y$dct- dct_mean_ctrl
+    y$rq <- 2^(y$ddct*-1)
+    rq_mean_ctrl <- mean(y$rq[y$group == sample_ctrl])
+    y$rq <- y$rq/rq_mean_ctrl
+    y
+  })
+
+  expList <- Reduce(rbind, expList)
 
   # isolate interest gene and group
-  exp_sub <- exp[exp$gene == gene & exp$group %in% groups,]
+  exp_sub <- expList[expList$gene == gene & expList$group %in% groups,]
   exp_sub$group <- factor(exp_sub$group, levels = groups)
-
-  # normalize
-  mean_ctrl <- mean(exp_sub$rq[exp_sub$group == groups[1]])
-  exp_sub$rq <- exp_sub$rq/mean_ctrl
 
   # stat
   res_dunn <- rstatix::dunn_test(exp_sub, rq ~ group)
