@@ -8,6 +8,10 @@ plotFC_multi(
   files,
   labels,
   pos.label = 0.3,
+  nudge.label.y = 0.8,
+  plot.perc = F,
+  nudge.perc.x = 3,
+  nudge.perc.y = 0.8,
   channel,
   xlims,
   title = "xxx",
@@ -23,6 +27,14 @@ plotFC_multi(
 \item{labels}{labels}
 
 \item{pos.label}{position of labels}
+
+\item{nudge.label.y}{Vertical adjustment to nudge sample labels by}
+
+\item{plot.perc}{logical, it controls whether to plot perc labels}
+
+\item{nudge.perc.x}{Horizontal adjustment to nudge perc labels by}
+
+\item{nudge.perc.y}{Vertical adjustment to nudge perc labels by}
 
 \item{channel}{channel name in the CSV file}
 

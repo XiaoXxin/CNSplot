@@ -12,6 +12,10 @@
 #' @param alpha alpha
 #' @param fixed_ratio ratio of the x axis and y axis
 #' @param pos.label position of labels
+#' @param nudge.label.y Vertical adjustment to nudge sample labels by
+#' @param plot.perc logical, it controls whether to plot perc labels
+#' @param nudge.perc.x Horizontal adjustment to nudge perc labels by
+#' @param nudge.perc.y Vertical adjustment to nudge perc labels by
 #'
 #' @return a ggplot2 density plot
 #' @export
@@ -22,6 +26,10 @@
 plotFC_multi <- function(files,
                          labels,
                          pos.label = 0.3,
+                         nudge.label.y = 0.8,
+                         plot.perc = F,
+                         nudge.perc.x = 3,
+                         nudge.perc.y = 0.8,
                          channel,
                          xlims,
                          title = "xxx",
@@ -45,13 +53,34 @@ plotFC_multi <- function(files,
   exps <- Reduce(rbind, expList)
   exps <- exps[exps$exp > 0, ]
 
+  # MFI
   sum <- exps %>%
     dplyr::group_by(sample) %>%
     dplyr::summarise(MFI = mean(exp))
 
 
+  # positive cells
+  if(plot.perc){
+    lim_f <- quantile(exps$exp[exps$sample == labels[1]], 0.99)
+
+    percList <- c()
+    for (i in 1:length(labels)) {
+      exp_sub <- exps[exps$sample == labels[i],]
+      perc <- length(exp_sub$exp[exp_sub$exp > lim_f])/length(exp_sub$exp)
+      perc <- round(perc*100, 2)
+
+      percList[i] <- perc
+
+    }
+  }
+
   exps$sample <- factor(exps$sample, levels = rev(labels))
   labelMeta <- data.frame(label = labels, x = label.x)
+
+  if(plot.perc){
+    labelMeta$perc <- paste0(percList, " %")
+  }
+
 
   p <- ggplot(exps, aes(x = exp, y = sample)) +
     ggridges::geom_density_ridges(aes(height = after_stat(scaled), fill = sample, color = sample),
@@ -66,7 +95,7 @@ plotFC_multi <- function(files,
                   guide = "axis_logticks")+
     scale_y_discrete(expand = c(0, 0,0, 1))+
     scale_fill_manual(values = fills)+
-    geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = label), hjust = 0, nudge_y = 0.8, inherit.aes = F)+
+    geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = label), hjust = 0, nudge_y = nudge.label.y, inherit.aes = F)+
     ggtitle(title)+
     theme_bw()+
     theme(legend.title = element_blank(),
@@ -85,6 +114,14 @@ plotFC_multi <- function(files,
   }else{
     p <- p+scale_color_manual(values = colors)
   }
+
+  if(plot.perc){
+    p <- p+geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = perc),
+                     hjust = 0, nudge_x = nudge.perc.x, nudge_y = nudge.perc.y, inherit.aes = F)
+
+    p <- p+geom_vline(aes(xintercept = lim_f), linetype="dashed")
+  }
+
 
 
   p
