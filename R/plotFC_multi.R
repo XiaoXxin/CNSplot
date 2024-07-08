@@ -61,13 +61,11 @@ plotFC_multi <- function(files,
                                   adjust =1/2,
                                   rel_min_height = 0) +
     scale_x_log10(expand = c(0,0),
-                  limits = c(xlims[1], xlims[2]),
                   breaks = scales::breaks_log(n = breaks, base = 10),
                   labels = scales::label_log(base = 10),
                   guide = "axis_logticks")+
     scale_y_discrete(expand = c(0, 0,0, 1))+
     scale_fill_manual(values = fills)+
-    scale_color_manual(values = colors)+
     geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = label), hjust = 0, nudge_y = 0.8, inherit.aes = F)+
     ggtitle(title)+
     theme_bw()+
@@ -80,7 +78,13 @@ plotFC_multi <- function(files,
           axis.ticks.x = element_line(linewidth = 0.4),
           axis.ticks.y = element_blank(),
           axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
-    coord_fixed(ratio = fixed_ratio)
+    coord_fixed(ratio = fixed_ratio, xlim = c(xlims[1], xlims[2]))
+
+  if(length(colors) == 1){
+    p <- p+scale_color_manual(values = rep(colors, length(files)))
+  }else{
+    p <- p+scale_color_manual(values = colors)
+  }
 
 
   p
