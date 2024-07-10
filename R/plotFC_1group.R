@@ -9,13 +9,13 @@
 #' @param lab.x x-axis label
 #' @param lab.y y-axis label
 #' @param title plot title
-#' @param legend plot legend, the vaules can be "none"/"legend"
+#' @param legend plot legend, the values can be "none"/"legend"
 #' @param fill fill
 #' @param color color
 #' @param alpha alpha
 #' @param fixed_ratio ratio of the x axis and y axis
 #'
-#' @return
+#' @return a ggplot2 plot
 #' @export
 #'
 #' @examples

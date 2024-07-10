@@ -40,7 +40,7 @@ plotFC_1group(
 
 \item{title}{plot title}
 
-\item{legend}{plot legend, the vaules can be "none"/"legend"}
+\item{legend}{plot legend, the values can be "none"/"legend"}
 
 \item{fill}{fill}
 
@@ -49,6 +49,9 @@ plotFC_1group(
 \item{alpha}{alpha}
 
 \item{fixed_ratio}{ratio of the x axis and y axis}
+}
+\value{
+a ggplot2 plot
 }
 \description{
 Density plot for flow cytometry
