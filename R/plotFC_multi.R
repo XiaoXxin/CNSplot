@@ -30,6 +30,9 @@ plotFC_multi <- function(files,
                          plot.perc = F,
                          nudge.perc.x = 3,
                          nudge.perc.y = 0.8,
+                         plot.MFI = F,
+                         nudge.MFI.x = 3,
+                         nudge.MFI.y = 0.8,
                          channel,
                          xlims,
                          title = "xxx",
@@ -80,6 +83,9 @@ plotFC_multi <- function(files,
   if(plot.perc){
     labelMeta$perc <- paste0(percList, " %")
   }
+  if(plot.MFI){
+    labelMeta$MFI <- sum$MFI
+  }
 
 
   p <- ggplot(exps, aes(x = exp, y = sample)) +
@@ -122,6 +128,11 @@ plotFC_multi <- function(files,
     p <- p+geom_vline(aes(xintercept = lim_f), linetype="dashed")
   }
 
+  if(plot.MFI){
+    p <- p+geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = MFI),
+                     hjust = 0, nudge_x = nudge.MFI.x, nudge_y = nudge.MFI.y, inherit.aes = F)
+
+  }
 
 
   p
