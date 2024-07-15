@@ -12,6 +12,9 @@ plotFC_multi(
   plot.perc = F,
   nudge.perc.x = 3,
   nudge.perc.y = 0.8,
+  plot.MFI = F,
+  nudge.MFI.x = 3,
+  nudge.MFI.y = 0.8,
   channel,
   xlims,
   title = "xxx",
@@ -32,9 +35,15 @@ plotFC_multi(
 
 \item{plot.perc}{logical, it controls whether to plot perc labels}
 
-\item{nudge.perc.x}{Horizontal adjustment to nudge perc labels by}
+\item{nudge.perc.x}{horizontal adjustment to nudge perc labels by}
 
-\item{nudge.perc.y}{Vertical adjustment to nudge perc labels by}
+\item{nudge.perc.y}{vertical adjustment to nudge perc labels by}
+
+\item{plot.MFI}{logical, it controls whether to plot MFI labels}
+
+\item{nudge.MFI.x}{horizontal adjustment to nudge MFI labels by}
+
+\item{nudge.MFI.y}{vertical adjustment to nudge MFI labels by}
 
 \item{channel}{channel name in the CSV file}
 

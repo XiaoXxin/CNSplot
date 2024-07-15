@@ -14,8 +14,11 @@
 #' @param pos.label position of labels
 #' @param nudge.label.y Vertical adjustment to nudge sample labels by
 #' @param plot.perc logical, it controls whether to plot perc labels
-#' @param nudge.perc.x Horizontal adjustment to nudge perc labels by
-#' @param nudge.perc.y Vertical adjustment to nudge perc labels by
+#' @param nudge.perc.x horizontal adjustment to nudge perc labels by
+#' @param nudge.perc.y vertical adjustment to nudge perc labels by
+#' @param plot.MFI logical, it controls whether to plot MFI labels
+#' @param nudge.MFI.x horizontal adjustment to nudge MFI labels by
+#' @param nudge.MFI.y vertical adjustment to nudge MFI labels by
 #'
 #' @return a ggplot2 density plot
 #' @export
