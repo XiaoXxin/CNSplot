@@ -62,8 +62,7 @@ plotFC_multi <- function(files,
   # MFI
   sum <- exps %>%
     dplyr::group_by(sample) %>%
-    dplyr::summarise(MFI = mean(exp))
-
+    dplyr::summarise(MFI = round(mean(exp), 0))
 
   # positive cells
   if(plot.perc){
@@ -80,16 +79,23 @@ plotFC_multi <- function(files,
     }
   }
 
-  exps$sample <- factor(exps$sample, levels = rev(labels))
   labelMeta <- data.frame(label = labels, x = label.x)
 
   if(plot.perc){
     labelMeta$perc <- paste0(percList, " %")
   }
   if(plot.MFI){
-    labelMeta$MFI <- sum$MFI
+    labelMeta$MFI <- sum$MFI[match(labelMeta$label, sum$sample)] %>% format(big.mark = ",")
   }
 
+
+  exps <- data.frame(sample = labels, addmin = xlims[1]-1, addmax = xlims[2]+1) %>%
+    gather(add, exp, -sample) %>%
+    subset(select = c("sample", "exp")) %>%
+    rbind(exps) %>%
+    tibble::remove_rownames()
+
+  exps$sample <- factor(exps$sample, levels = rev(labels))
 
   p <- ggplot(exps, aes(x = exp, y = sample)) +
     ggridges::geom_density_ridges(aes(height = after_stat(scaled), fill = sample, color = sample),
