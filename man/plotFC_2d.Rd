@@ -12,11 +12,12 @@ plotFC_2d(
   ylims = c(2, 7),
   gates = c(4.1, 3.5),
   legend = "none",
-  type = c("point", "density"),
+  type = c("point", "density", "point_density"),
   alpha.point = 0.3,
   alpha.density = 0.6,
   size.point = 0.1,
   size.density = 1,
+  ajust.pointdensity = 0.5,
   bins.density = 50
 )
 }
@@ -46,6 +47,8 @@ plotFC_2d(
 \item{size.density}{size of the density}
 
 \item{bins.density}{bins of the density}
+
+\item{adjust.pointdensity}{adjust for pointdensity plot}
 }
 \value{
 a ggplot2 plot

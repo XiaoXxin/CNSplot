@@ -13,6 +13,7 @@
 #' @param size.point size of the point
 #' @param size.density size of the density
 #' @param bins.density bins of the density
+#' @param adjust.pointdensity adjust for pointdensity plot
 #'
 #' @return a ggplot2 plot
 #' @export
@@ -25,11 +26,12 @@ plotFC_2d <- function(file,
                       ylims = c(2,7),
                       gates = c(4.1, 3.5),
                       legend = "none",
-                      type = c("point", "density"),
+                      type = c("point", "density", "point_density"),
                       alpha.point = 0.3,
                       alpha.density = 0.6,
                       size.point = 0.1,
                       size.density = 1,
+                      ajust.pointdensity = 0.5,
                       bins.density = 50){
   xbreaks <- floor(xlims[2]-xlims[1]+1)
   ybreaks <- floor(ylims[2]-ylims[1]+1)
@@ -56,12 +58,15 @@ plotFC_2d <- function(file,
   p <- ggplot(exp, aes(x = exp1, y = exp2))
 
   if("point" %in% type){
-    p <- p+rasterise(geom_point(size = size.point, alpha = alpha.point, color = "#2F89BE"), dpi = 300)
+    p <- p+ggrastr::rasterise(geom_point(size = size.point, alpha = alpha.point, color = "#2F89BE"), dpi = 300)
   }
 
   if("density" %in% type){
     p <- p+geom_density_2d(aes(color = after_stat(level)), contour_var = "ndensity",
                            bins = bins.density, linewidth = size.density, alpha = alpha.density)
+  }
+  if("point_density" %in% type){
+    p <- p+ggrastr::rasterise(ggpointdensity::geom_pointdensity(size = size.point, alpha = alpha.point, adjust = adjust.pointdensity), dpi = 300)
   }
 
   p <- p+scale_x_log10(expand = c(0,0),
