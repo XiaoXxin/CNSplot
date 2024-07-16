@@ -31,7 +31,7 @@ plotFC_2d <- function(file,
                       alpha.density = 0.6,
                       size.point = 0.1,
                       size.density = 1,
-                      ajust.pointdensity = 0.5,
+                      adjust.pointdensity = 0.5,
                       bins.density = 50){
   xbreaks <- floor(xlims[2]-xlims[1]+1)
   ybreaks <- floor(ylims[2]-ylims[1]+1)
