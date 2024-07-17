@@ -19,7 +19,6 @@
 #' @param fills colors used to fill the density
 #' @param colors colors
 #' @param alpha alpha
-#' @param fixed_ratio ratio of the x axis and y axis
 #'
 #' @return a ggplot2 density plot
 #' @export
@@ -33,8 +32,7 @@ plotFC_2group <- function(file_con, file_test,
                           text.x, lab.x = NULL, lab.y = "% of Max",
                           title = "xxx",
                           legend = "legend",
-                          fills, colors, alpha,
-                          fixed_ratio = 5.5){
+                          fills, colors, alpha){
 
   gate <- 10^gate
   breaks <- xlims[2]-xlims[1]+1
@@ -75,7 +73,6 @@ plotFC_2group <- function(file_con, file_test,
     ggtitle(title)+
     guides(color = legend, fill = legend)+
     scale_x_log10(expand = c(0,0),
-                  limits = c(xlims[1], xlims[2]),
                   breaks = scales::breaks_log(n = breaks, base = 10),
                   labels = scales::label_log(base = 10),
                   guide = "axis_logticks")+
@@ -87,12 +84,13 @@ plotFC_2group <- function(file_con, file_test,
     scale_color_manual(values = colors)+
     theme_bw()+
     theme(legend.title = element_blank(),
+          aspect.ratio = 1,
           plot.title = element_text(hjust = 0.5),
           panel.grid = element_blank(),
           axis.ticks.x = element_line(linewidth = 0.4),
           axis.ticks.y = element_line(linewidth = 0.4),
-          axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
-    coord_fixed(ratio = fixed_ratio)
+          axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))
+    coord_fixed(xlim = c(xlims[1], xlims[2]))
 
   p
 
