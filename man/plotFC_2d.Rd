@@ -17,7 +17,7 @@ plotFC_2d(
   alpha.density = 0.6,
   size.point = 0.1,
   size.density = 1,
-  ajust.pointdensity = 0.5,
+  adjust.pointdensity = 0.5,
   bins.density = 50
 )
 }
@@ -46,9 +46,9 @@ plotFC_2d(
 
 \item{size.density}{size of the density}
 
-\item{bins.density}{bins of the density}
-
 \item{adjust.pointdensity}{adjust for pointdensity plot}
+
+\item{bins.density}{bins of the density}
 }
 \value{
 a ggplot2 plot

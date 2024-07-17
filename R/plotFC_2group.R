@@ -89,7 +89,7 @@ plotFC_2group <- function(file_con, file_test,
           panel.grid = element_blank(),
           axis.ticks.x = element_line(linewidth = 0.4),
           axis.ticks.y = element_line(linewidth = 0.4),
-          axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))
+          axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
     coord_fixed(xlim = c(xlims[1], xlims[2]))
 
   p

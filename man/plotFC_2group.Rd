@@ -19,8 +19,7 @@ plotFC_2group(
   legend = "legend",
   fills,
   colors,
-  alpha,
-  fixed_ratio = 5.5
+  alpha
 )
 }
 \arguments{
@@ -53,8 +52,6 @@ plotFC_2group(
 \item{colors}{colors}
 
 \item{alpha}{alpha}
-
-\item{fixed_ratio}{ratio of the x axis and y axis}
 }
 \value{
 a ggplot2 density plot
