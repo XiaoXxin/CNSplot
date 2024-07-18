@@ -74,7 +74,7 @@ plotFC_multi <- function(files,
     for (i in 1:length(labels)) {
       exp_sub <- exps[exps$sample == labels[i],]
       perc <- length(exp_sub$exp[exp_sub$exp > lim_f])/length(exp_sub$exp)
-      perc <- round(perc*100, 2)
+      perc <- round(perc*100, 1)
 
       percList[i] <- perc
 
