@@ -10,6 +10,7 @@ plotFC_multi(
   pos.label = 0.3,
   nudge.label.y = 0.8,
   plot.perc = F,
+  quantile.probs = 0.99,
   nudge.perc.x = 3,
   nudge.perc.y = 0.8,
   plot.MFI = F,
@@ -34,6 +35,8 @@ plotFC_multi(
 \item{nudge.label.y}{Vertical adjustment to nudge sample labels by}
 
 \item{plot.perc}{logical, it controls whether to plot perc labels}
+
+\item{quantile.probs}{numeric vector of probabilities with values in 0-1}
 
 \item{nudge.perc.x}{horizontal adjustment to nudge perc labels by}
 

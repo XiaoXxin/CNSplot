@@ -19,6 +19,7 @@
 #' @param plot.MFI logical, it controls whether to plot MFI labels
 #' @param nudge.MFI.x horizontal adjustment to nudge MFI labels by
 #' @param nudge.MFI.y vertical adjustment to nudge MFI labels by
+#' @param quantile.probs numeric vector of probabilities with values in 0-1
 #'
 #' @return a ggplot2 density plot
 #' @export
@@ -31,6 +32,7 @@ plotFC_multi <- function(files,
                          pos.label = 0.3,
                          nudge.label.y = 0.8,
                          plot.perc = F,
+                         quantile.probs = 0.99,
                          nudge.perc.x = 3,
                          nudge.perc.y = 0.8,
                          plot.MFI = F,
@@ -66,7 +68,7 @@ plotFC_multi <- function(files,
 
   # positive cells
   if(plot.perc){
-    lim_f <- quantile(exps$exp[exps$sample == labels[1]], 0.99)
+    lim_f <- quantile(exps$exp[exps$sample == labels[1]], probs = quantile.probs)
 
     percList <- c()
     for (i in 1:length(labels)) {
