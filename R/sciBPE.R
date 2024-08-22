@@ -13,6 +13,8 @@
 #' @param fill fill colors
 #' @param ylims two numeric values, specifying the lower limit and the upper limit of the scale
 #' @param aspect.ratio ratio of the x axis and y axis
+#' @param angle.x angle of x-axis text
+#' @param jitter.width jitter width of the points
 #'
 #' @return a ggplot2 plot
 #' @export
@@ -30,6 +32,8 @@ sciBPE <- function(dat,
                    title = "",
                    fill = "black",
                    ylims,
+                   angle.x = 0,
+                   jitter.width = 0.5,
                    aspect.ratio = 0.5){
   dat <- gather(dat, group, exp) %>% mutate(group = factor(group, levels = levels))
 
@@ -51,32 +55,33 @@ sciBPE <- function(dat,
     labs(x= lab.x, y = lab.y)+
     guides(fill = "none")+
     ggtitle(title)+
-    scale_x_discrete(expand = c(0,0))+
+    scale_x_discrete(expand = c(0,0), labels = lab.sample)+
     scale_y_continuous(expand = c(0,0))+
-    scale_fill_manual(values = fill, labels = lab.sample)+
+    scale_fill_manual(values = fill)+
     theme_bw()+
     theme(aspect.ratio = 0.5,
           legend.title = element_blank(),
           plot.title = element_text(hjust = 0.5),
           panel.grid = element_blank(),
-          axis.text.x = element_text(size = size.text.x),
+          axis.text.x = element_text(size = size.text.x, angle = angle.x, vjust = 0.5),
           axis.text.y = element_text(size = size.text.y))+
     coord_fixed(ylim = c(ylims[1], ylims[2]))
 
   if(plot_B){
-    p <- p+geom_bar(position = position_dodge(1), stat = "identity", color = "black", alpha = 0.6, width=0.6)+
+    p <- p+geom_bar(stat = "identity", color = "black", alpha = 0.6, width=0.6)+
       geom_errorbar(aes(x = group, ymin = mean-sem, ymax = mean+sem),
-                         position = position_dodge(1), width = 0.3, color = "black", alpha = 0.5, linewidth = 1)
+                         width = 0.3, color = "black", alpha = 0.5, linewidth = 1)
   }else{
     p <- p+geom_errorbar(aes(x = group, ymin = mean, ymax = mean),
-                         position = position_dodge(1), width = 0.5, color = "black", alpha = 0.5, linewidth = 1)+
+                         width = 0.5, color = "black", alpha = 0.5, linewidth = 1)+
       geom_errorbar(aes(x = group, ymin = mean-sem, ymax = mean+sem),
-                    position = position_dodge(1), width = 0.3, color = "black", alpha = 0.5, linewidth = 1)
+                    width = 0.3, color = "black", alpha = 0.5, linewidth = 1)
   }
 
 
-  p <- p+geom_point(data = dat, aes(y = exp), shape = 21, size = size.point, show.legend = FALSE, color = "black",
-               position = position_jitterdodge(0.2, dodge.width = 1))
+  p <- p+geom_jitter(data = dat, aes(y = exp),
+                     shape = 21, size = size.point, show.legend = FALSE, color = "black",
+                     width = jitter.width)
 
   p
 

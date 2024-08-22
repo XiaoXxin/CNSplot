@@ -17,6 +17,8 @@ sciBPE(
   title = "",
   fill = "black",
   ylims,
+  angle.x = 0,
+  jitter.width = 0.5,
   aspect.ratio = 0.5
 )
 }
@@ -44,6 +46,10 @@ sciBPE(
 \item{fill}{fill colors}
 
 \item{ylims}{two numeric values, specifying the lower limit and the upper limit of the scale}
+
+\item{angle.x}{angle of x-axis text}
+
+\item{jitter.width}{jitter width of the points}
 
 \item{aspect.ratio}{ratio of the x axis and y axis}
 }
