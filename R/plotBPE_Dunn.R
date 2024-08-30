@@ -94,7 +94,7 @@ plotBPE_Dunn <- function(dat,
     guides(fill = "none")+
     ggtitle(title)+
     scale_x_discrete(labels = text.x)+
-    scale_y_continuous(expand = c(0,0), n.breaks = breaks.y, limits = c(0,max(res_dunn$y)*1.1))+
+    scale_y_continuous(expand = c(0,0), n.breaks = breaks.y)+
     scale_fill_manual(values = fill)+
     theme_bw()+
     theme(aspect.ratio = aspect.ratio,
@@ -102,7 +102,8 @@ plotBPE_Dunn <- function(dat,
           plot.title = element_text(hjust = 0.5),
           panel.grid = element_blank(),
           axis.text.x = element_text(size = size.text.x, angle = angle.x, vjust = 0.5),
-          axis.text.y = element_text(size = size.text.y))
+          axis.text.y = element_text(size = size.text.y))+
+    coord_fixed(ylim = c(0, max(res_dunn$y)*1.1))
 
   if(plot.B){
     p <- p+geom_bar(stat = "identity", color = "black", alpha = 0.6, width=0.6)+
