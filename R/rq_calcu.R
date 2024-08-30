@@ -1,4 +1,10 @@
-rq_calcu <- function(exp, gene_ctrl, sample_ctrl){
+
+rq_calcu <- function(exp, group = "group", gene = "gene", ct = "ct", gene_ctrl, sample_ctrl){
+
+  colnames(exp)[colnames(exp) == group] <- "group"
+  colnames(exp)[colnames(exp) == gene] <- "gene"
+  colnames(exp)[colnames(exp) == ct] <- "ct"
+
   expList <- split(exp, ~group)
   expList <- lapply(expList, function(x) {
     ct_mean_ctrl <- mean(x$ct[x$gene == gene_ctrl])
@@ -7,7 +13,7 @@ rq_calcu <- function(exp, gene_ctrl, sample_ctrl){
     x
   })
   expList <- Reduce(rbind, expList)
-  
+
   expList <- expList <- split(expList, ~gene)
   expList <- lapply(expList, function(y) {
     dct_mean_ctrl <- mean(y$dct[y$group == sample_ctrl])
@@ -17,7 +23,7 @@ rq_calcu <- function(exp, gene_ctrl, sample_ctrl){
     y$rq <- y$rq/rq_mean_ctrl
     y
   })
-  
+
   expList <- Reduce(rbind, expList)
   expList
 }

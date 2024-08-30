@@ -11,7 +11,7 @@
 #' @param size.point size of point
 #' @param title title
 #' @param fill fill colors
-#' @param ylims two numeric values, specifying the lower limit and the upper limit of the scale
+#' @param lims.y two numeric values, specifying the lower limit and the upper limit of the scale
 #' @param aspect.ratio ratio of the x axis and y axis
 #' @param angle.x angle of x-axis text
 #' @param jitter.width jitter width of the points
@@ -21,9 +21,10 @@
 #'
 #' @examples
 sciBPE <- function(dat,
+                   group = "group",
+                   exp = "exp",
                    plot_B = T,
                    levels,
-                   lab.sample = NULL,
                    lab.x = "",
                    lab.y = "",
                    size.text.x = 10,
@@ -31,10 +32,14 @@ sciBPE <- function(dat,
                    size.point = 2,
                    title = "",
                    fill = "black",
-                   ylims,
+                   lims.y,
+                   breaks.y = NULL,
+                   text.sample = NULL,
+                   text.y = NULL,
                    angle.x = 0,
                    jitter.width = 0.5,
                    aspect.ratio = 0.5){
+
   dat <- gather(dat, group, exp) %>% mutate(group = factor(group, levels = levels))
 
   dat_sum <- dat %>%
@@ -49,33 +54,33 @@ sciBPE <- function(dat,
   }
   fill <- fill[1:nrow(dat_sum)]
 
-  if(is.null(lab.sample)){lab.sample = levels}
+  if(is.null(text.sample)){text.sample = levels}
 
   p <- ggplot(dat_sum, aes(x = group, y = mean, fill = group))+
     labs(x= lab.x, y = lab.y)+
     guides(fill = "none")+
     ggtitle(title)+
-    scale_x_discrete(expand = c(0,0), labels = lab.sample)+
-    scale_y_continuous(expand = c(0,0))+
-    scale_fill_manual(values = fill)+
+    scale_x_discrete(labels = text.sample)+
+    scale_y_continuous(expand = c(0,0), n.breaks = breaks.y)+
+    scale_fill_manual(expand = c(0,0), values = fill)+
     theme_bw()+
-    theme(aspect.ratio = 0.5,
+    theme(aspect.ratio = aspect.ratio,
           legend.title = element_blank(),
           plot.title = element_text(hjust = 0.5),
           panel.grid = element_blank(),
           axis.text.x = element_text(size = size.text.x, angle = angle.x, vjust = 0.5),
           axis.text.y = element_text(size = size.text.y))+
-    coord_fixed(ylim = c(ylims[1], ylims[2]))
+    coord_fixed(ylim = c(lims.y[1], lims.y[2]))
 
   if(plot_B){
     p <- p+geom_bar(stat = "identity", color = "black", alpha = 0.6, width=0.6)+
       geom_errorbar(aes(x = group, ymin = mean-sem, ymax = mean+sem),
-                         width = 0.3, color = "black", alpha = 0.5, linewidth = 1)
+                         width = 0.3, color = "black", alpha = 0.8, linewidth = 1)
   }else{
     p <- p+geom_errorbar(aes(x = group, ymin = mean, ymax = mean),
-                         width = 0.5, color = "black", alpha = 0.5, linewidth = 1)+
+                         width = 0.5, color = "black", alpha = 0.8, linewidth = 1)+
       geom_errorbar(aes(x = group, ymin = mean-sem, ymax = mean+sem),
-                    width = 0.3, color = "black", alpha = 0.5, linewidth = 1)
+                    width = 0.3, color = "black", alpha = 0.8, linewidth = 1)
   }
 
 
