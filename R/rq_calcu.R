@@ -18,9 +18,9 @@ rq_calcu <- function(exp, group = "group", gene = "gene", ct = "ct", gene_ctrl, 
   expList <- lapply(expList, function(y) {
     dct_mean_ctrl <- mean(y$dct[y$group == sample_ctrl])
     y$ddct <- y$dct- dct_mean_ctrl
-    y$rq <- 2^(y$ddct*-1)
-    rq_mean_ctrl <- mean(y$rq[y$group == sample_ctrl])
-    y$rq <- y$rq/rq_mean_ctrl
+    y$exp <- 2^(y$ddct*-1)
+    rq_mean_ctrl <- mean(y$exp[y$group == sample_ctrl])
+    y$exp <- y$exp/rq_mean_ctrl
     y
   })
 

@@ -62,23 +62,20 @@ plotFC_1group <- function(file,
     labs(x = lab.x, y = lab.y)+
     ggtitle(title)+
     guides(color = legend, fill = legend)+
-    scale_x_log10(expand = c(0,0),
-                  limits = c(xlims[1], xlims[2]),
-                  breaks = scales::breaks_log(n = breaks, base = 10),
+    scale_x_log10(breaks = scales::breaks_log(n = breaks, base = 10),
                   labels = scales::label_log(base = 10),
                   guide = "axis_logticks")+
-    scale_y_continuous(expand = c(0,0),
-                       limits = c(0,1.1),
-                       breaks = seq(0,1, 0.2),
+    scale_y_continuous(breaks = seq(0,1, 0.2),
                        labels = scales::label_percent(suffix = ""))+
     theme_bw()+
     theme(legend.title = element_blank(),
+          aspect.ratio = 1,
           plot.title = element_text(hjust = 0.5),
           panel.grid = element_blank(),
           axis.ticks.x = element_line(linewidth = 0.4),
           axis.ticks.y = element_line(linewidth = 0.4),
           axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
-    coord_fixed(ratio = fixed_ratio)
+    coord_fixed(xlim = c(xlims[1], xlims[2]), ylim = c(0,1.1), expand = F)
 
   p
 

@@ -26,7 +26,7 @@
 plotBPE_Dunn <- function(dat,
                        levels,
                        comparison,
-                       style,
+                       style = 2,
                        plot.B = T,
                        lab.x = "",
                        lab.y = "",
