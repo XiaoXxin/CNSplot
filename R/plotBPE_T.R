@@ -3,7 +3,7 @@ plotBPE_T <- function(dat,
                       group = "group",
                       levels,
                       comparison,
-                      style = 2,
+                      style = 1,
                       plot.B = T,
                       lab.x = "",
                       lab.y = "",
@@ -113,7 +113,7 @@ plotBPE_T <- function(dat,
                     width = 0.3, color = "black", alpha = 0.8, linewidth = 1)
   }
 
-  p <- p+geom_jitter(data = dat, aes(y = exp),
+  p <- p+geom_jitter(data = dat_sub, aes(y = exp),
                      shape = 21, size = size.point, show.legend = FALSE, color = "black",
                      width = jitter.width)
 

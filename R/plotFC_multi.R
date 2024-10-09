@@ -42,7 +42,7 @@ plotFC_multi <- function(files,
                          xlims,
                          title = "xxx",
                          fills, colors, alpha,
-                         fixed_ratio = 3){
+                         aspect.ratio = 1){
 
 
   breaks <- xlims[2]-xlims[1]+1
@@ -117,6 +117,7 @@ plotFC_multi <- function(files,
     theme_bw()+
     theme(legend.title = element_blank(),
           legend.position="none",
+          aspect.ratio = aspect.ratio,
           plot.title = element_text(hjust = 0.5),
           panel.grid = element_blank(),
           axis.title = element_blank(),
@@ -124,7 +125,7 @@ plotFC_multi <- function(files,
           axis.ticks.x = element_line(linewidth = 0.4),
           axis.ticks.y = element_blank(),
           axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
-    coord_fixed(ratio = fixed_ratio, xlim = c(xlims[1], xlims[2]))
+    coord_fixed(xlim = c(xlims[1], xlims[2]))
 
   if(length(colors) == 1){
     p <- p+scale_color_manual(values = rep(colors, length(files)))
@@ -142,6 +143,7 @@ plotFC_multi <- function(files,
   if(plot.MFI){
     p <- p+geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = MFI),
                      hjust = 0, nudge_x = nudge.MFI.x, nudge_y = nudge.MFI.y, inherit.aes = F)
+    p <- p+geom_vline(aes(xintercept = sum$MFI[sum$sample == labels[1]]), linetype="dashed")
 
   }
 

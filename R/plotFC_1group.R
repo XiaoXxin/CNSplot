@@ -13,7 +13,6 @@
 #' @param fill fill
 #' @param color color
 #' @param alpha alpha
-#' @param fixed_ratio ratio of the x axis and y axis
 #'
 #' @return a ggplot2 plot
 #' @export
@@ -31,8 +30,7 @@ plotFC_1group <- function(file,
                           legend = "legend",
                           fill = "#939393",
                           color = "#939393",
-                          alpha = 0.5,
-                          fixed_ratio = 5.5){
+                          alpha = 0.5){
 
   gate <- 10^gate
   breaks <- floor(xlims[2]-xlims[1]+1)
