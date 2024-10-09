@@ -22,7 +22,7 @@ plotFC_multi(
   fills,
   colors,
   alpha,
-  fixed_ratio = 3
+  aspect.ratio = 1
 )
 }
 \arguments{
@@ -60,7 +60,7 @@ plotFC_multi(
 
 \item{alpha}{alpha}
 
-\item{fixed_ratio}{ratio of the x axis and y axis}
+\item{aspect.ratio}{ratio of the x axis and y axis}
 }
 \value{
 a ggplot2 density plot

@@ -1,4 +1,16 @@
-
+#' Title
+#'
+#' @param exp
+#' @param group
+#' @param gene
+#' @param ct
+#' @param gene_ctrl
+#' @param sample_ctrl
+#'
+#' @return
+#' @export
+#'
+#' @examples
 rq_calcu <- function(exp, group = "group", gene = "gene", ct = "ct", gene_ctrl, sample_ctrl){
 
   colnames(exp)[colnames(exp) == group] <- "group"

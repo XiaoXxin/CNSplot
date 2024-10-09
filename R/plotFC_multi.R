@@ -10,7 +10,6 @@
 #' @param fills colors used to fill the density
 #' @param colors colors
 #' @param alpha alpha
-#' @param fixed_ratio ratio of the x axis and y axis
 #' @param pos.label position of labels
 #' @param nudge.label.y Vertical adjustment to nudge sample labels by
 #' @param plot.perc logical, it controls whether to plot perc labels
@@ -20,6 +19,7 @@
 #' @param nudge.MFI.x horizontal adjustment to nudge MFI labels by
 #' @param nudge.MFI.y vertical adjustment to nudge MFI labels by
 #' @param quantile.probs numeric vector of probabilities with values in 0-1
+#' @param aspect.ratio ratio of the x axis and y axis
 #'
 #' @return a ggplot2 density plot
 #' @export

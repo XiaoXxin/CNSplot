@@ -1,3 +1,31 @@
+#' Title
+#'
+#' @param dat
+#' @param exp
+#' @param group
+#' @param levels
+#' @param comparison
+#' @param style
+#' @param plot.B
+#' @param lab.x
+#' @param lab.y
+#' @param title
+#' @param text.x
+#' @param size.text.x
+#' @param size.text.y
+#' @param size.point
+#' @param size.p
+#' @param angle.x
+#' @param breaks.y
+#' @param start.y
+#' @param fill
+#' @param jitter.width
+#' @param aspect.ratio
+#'
+#' @return
+#' @export
+#'
+#' @examples
 plotBPE_T <- function(dat,
                       exp = "exp",
                       group = "group",

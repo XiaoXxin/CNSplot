@@ -17,8 +17,7 @@ plotFC_1group(
   legend = "legend",
   fill = "#939393",
   color = "#939393",
-  alpha = 0.5,
-  fixed_ratio = 5.5
+  alpha = 0.5
 )
 }
 \arguments{
@@ -47,8 +46,6 @@ plotFC_1group(
 \item{color}{color}
 
 \item{alpha}{alpha}
-
-\item{fixed_ratio}{ratio of the x axis and y axis}
 }
 \value{
 a ggplot2 plot
