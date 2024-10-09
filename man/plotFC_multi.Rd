@@ -22,6 +22,7 @@ plotFC_multi(
   fills,
   colors,
   alpha,
+  box = T,
   aspect.ratio = 1
 )
 }
@@ -59,6 +60,8 @@ plotFC_multi(
 \item{colors}{colors}
 
 \item{alpha}{alpha}
+
+\item{box}{logical, it controls whether to plot panel.border}
 
 \item{aspect.ratio}{ratio of the x axis and y axis}
 }

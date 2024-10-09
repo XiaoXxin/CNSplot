@@ -20,6 +20,7 @@
 #' @param nudge.MFI.y vertical adjustment to nudge MFI labels by
 #' @param quantile.probs numeric vector of probabilities with values in 0-1
 #' @param aspect.ratio ratio of the x axis and y axis
+#' @param box logical, it controls whether to plot panel.border
 #'
 #' @return a ggplot2 density plot
 #' @export
@@ -42,6 +43,7 @@ plotFC_multi <- function(files,
                          xlims,
                          title = "xxx",
                          fills, colors, alpha,
+                         box = T,
                          aspect.ratio = 1){
 
 
@@ -114,18 +116,34 @@ plotFC_multi <- function(files,
     scale_fill_manual(values = fills)+
     geom_text(data = labelMeta, mapping = aes(x = x, y = label, label = label), hjust = 0, nudge_y = nudge.label.y, inherit.aes = F)+
     ggtitle(title)+
-    theme_bw()+
-    theme(legend.title = element_blank(),
-          legend.position="none",
-          aspect.ratio = aspect.ratio,
-          plot.title = element_text(hjust = 0.5),
-          panel.grid = element_blank(),
-          axis.title = element_blank(),
-          axis.text.y = element_blank(),
-          axis.ticks.x = element_line(linewidth = 0.4),
-          axis.ticks.y = element_blank(),
-          axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
+    theme_bw()
+
+  if(box){
+    p <- p+theme(legend.title = element_blank(),
+               legend.position="none",
+               aspect.ratio = aspect.ratio,
+               plot.title = element_text(hjust = 0.5),
+               panel.grid = element_blank(),
+               axis.title = element_blank(),
+               axis.text.y = element_blank(),
+               axis.ticks.x = element_line(linewidth = 0.4),
+               axis.ticks.y = element_blank(),
+               axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
     coord_fixed(xlim = c(xlims[1], xlims[2]))
+  }else{
+    p <- p+theme(legend.title = element_blank(),
+                 legend.position="none",
+                 aspect.ratio = aspect.ratio,
+                 plot.title = element_text(hjust = 0.5),
+                 panel.grid = element_blank(),
+                 axis.title = element_blank(),
+                 axis.text.y = element_blank(),
+                 panel.border = element_blank(),
+                 axis.ticks.x = element_line(linewidth = 0.4),
+                 axis.ticks.y = element_blank(),
+                 axis.minor.ticks.x.bottom = element_line(linewidth = 0.2))+
+      coord_fixed(xlim = c(xlims[1], xlims[2]))
+  }
 
   if(length(colors) == 1){
     p <- p+scale_color_manual(values = rep(colors, length(files)))
