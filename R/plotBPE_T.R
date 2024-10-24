@@ -1,37 +1,33 @@
-#' Title
+#' @include utilities.R
+#' A function to draw bar (B) plot with point (P) and error (E) bars with t-test
 #'
-#' @param dat
-#' @param exp
-#' @param group
-#' @param levels
-#' @param comparison
-#' @param style
-#' @param plot.B
-#' @param lab.x
-#' @param lab.y
-#' @param title
-#' @param text.x
-#' @param size.text.x
-#' @param size.text.y
-#' @param size.point
-#' @param size.p
-#' @param angle.x
-#' @param breaks.y
-#' @param start.y
-#' @param fill
-#' @param jitter.width
-#' @param aspect.ratio
+#' @param dat a data frame
+#' @param formula a formula
+#' @param comparisons A list of length-2 vectors specifying the groups of interest to be compared
+#' @param plot.B boolean values determining if bar plot should be drawn
+#' @param lab.x label of x-axis
+#' @param lab.y label of y-axis
+#' @param title title
+#' @param text.x x-axis text
+#' @param size.text.x size of x-axis text
+#' @param size.text.y size of y-axis text
+#' @param size.point size of point
+#' @param size.p size of p values
+#' @param angle.x angle of x-axis text
+#' @param breaks.y breaks of y-axis
+#' @param start.y start of y-axis
+#' @param fill fill colors
+#' @param jitter.width jitter width of the points
+#' @param aspect.ratio ratio of the x axis and y axis
+#' @param nudge.p nudge of p values
 #'
-#' @return
+#' @return a ggplot2 plot
 #' @export
 #'
 #' @examples
 plotBPE_T <- function(dat,
-                      exp = "exp",
-                      group = "group",
-                      levels,
-                      comparison,
-                      style = 1,
+                      formula,
+                      comparisons,
                       plot.B = T,
                       lab.x = "",
                       lab.y = "",
@@ -41,6 +37,7 @@ plotBPE_T <- function(dat,
                       size.text.y = 10,
                       size.point = 2,
                       size.p = 4,
+                      nudge.p = 1.1,
                       angle.x = 0,
                       breaks.y = NULL,
                       start.y = 0,
@@ -48,58 +45,23 @@ plotBPE_T <- function(dat,
                       jitter.width = 0.1,
                       aspect.ratio = 0.5){
 
-  colnames(dat)[colnames(dat) == exp] <- "exp"
-  colnames(dat)[colnames(dat) == group] <- "group"
+  dat <- reconstruct_dataframe(dat, formula = formula)
 
-  # isolate interest gene and group
-  dat_sub <- dat[dat$group %in% levels,]
-  dat_sub$group <- factor(dat_sub$group, levels = levels)
+  res_t <- rstatix::t_test(dat, exp~group, comparisons)
 
-  # stat
-  res_t <- rstatix::t_test(dat_sub, exp ~ group)
-  res_t$groups <- paste(res_t$group1, res_t$group2, sep = "-")
+  res_t$y = p_line_y(dat, comparisons, nudge.p)
 
-  # comparison <- list(c(2, 3))
+  res_t <- cbind(res_t, p_line_x(dat, comparisons))
 
-  res_t <- lapply(comparison, function(x) {
-    tList <- res_t[grepl(levels[x[1]], res_t$groups) & grepl(levels[x[2]], res_t$groups), ]
-    tList$ppos <- mean(c(x[1],x[2]))
-    tList
-  }) %>% Reduce(rbind, .)
-
-  # p value position
-  max <- max(dat_sub$exp)*1.1
-  res_t$y = cumprod(c(max, rep(1.1, length(comparison)-1)))
-
-  # p value format
-  if(nrow(res_t)>1){
-    for (i in 1:nrow(res_t)) {
-    if(as.numeric(res_t$p.adj[i]) < 0.001){
-      res_t$p.adj[i] <- "p < 0.001"
-    }else{
-      res_t$p.adj[i] <- paste0("p = ", round(as.numeric(res_t$p.adj[i]), 4))
-    }
-  }
+  if("p.adj" %in% colnames(res_t)){
+    res_t$p.layout <- p_value_format(res_t$p.adj)
   }else{
-    if(as.numeric(res_t$p[1]) < 0.001){
-      res_t$p[1] <- "p < 0.001"
-    }else{
-      res_t$p[1] <- paste0("p = ", round(as.numeric(res_t$p[1]), 4))
-    }
-    res_t$p.adj <- res_t$p
+    res_t$p.layout <- p_value_format(res_t$p)
   }
 
+  res_t$x <- rowMeans(res_t[,c("x1","x2")])
 
-  if(style == 1){
-    res_t$vline = res_t$y
-    res_t$vline_end = res_t$y
-  }
-  if(style == 2){
-    res_t$vline = res_t$y+0.02
-    res_t$vline_end = res_t$y-0.02
-  }
-
-  dat_sum <- dat_sub %>%
+  dat_sum <- dat %>%
     dplyr::group_by(group) %>%
     dplyr::summarise(mean = mean(exp),
                      n = length(exp),
@@ -141,18 +103,13 @@ plotBPE_T <- function(dat,
                     width = 0.3, color = "black", alpha = 0.8, linewidth = 1)
   }
 
-  p <- p+geom_jitter(data = dat_sub, aes(y = exp),
+  p <- p+geom_jitter(data = dat, aes(y = exp),
                      shape = 21, size = size.point, show.legend = FALSE, color = "black",
                      width = jitter.width)
 
-  # stat
-  p <- p+geom_segment(data = res_t, aes(x = group1, xend = group2, y = y, yend = y),
+  p <- p+geom_segment(data = res_t, aes(x = x1, xend = x2, y = y, yend = y),
                       linewidth = 0.3, inherit.aes = F)+
-    geom_segment(data = res_t, aes(x = group1, xend = group1, y = vline, yend = vline_end),
-                 linewidth = 0.3, inherit.aes = F)+
-    geom_segment(data = res_t, aes(x = group2, xend = group2, y = vline, yend = vline_end),
-                 linewidth = 0.3, inherit.aes = F)+
-    geom_text(data = res_t, aes(x = ppos-0.2, y = y*1.02, label = p.adj),
+    geom_text(data = res_t, aes(x = x-0.2, y = y*1.02, label = p.layout),
               size = size.p, vjust = 0, hjust = 0, nudge_x = 0, inherit.aes = F)
 
   p

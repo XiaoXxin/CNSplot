@@ -25,3 +25,15 @@ Suggests:
 Config/testthat/edition: 3
 Depends: 
     ggplot2
+Collate: 
+    'plotBPE_Dunn.R'
+    'utilities.R'
+    'plotBPE_T.R'
+    'plotFC_1group.R'
+    'plotFC_2d.R'
+    'plotFC_2group.R'
+    'plotFC_multi.R'
+    'plotQ_Tukey.R'
+    'plotQ_t.R'
+    'rq_calcu.R'
+    'sciBPE.R'
