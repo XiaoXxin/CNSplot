@@ -6,9 +6,8 @@
 \usage{
 plotBPE_Dunn(
   dat,
-  levels,
-  comparison,
-  style = 2,
+  formula,
+  comparisons,
   plot.B = T,
   lab.x = "",
   lab.y = "",
@@ -18,21 +17,19 @@ plotBPE_Dunn(
   size.text.y = 10,
   size.point = 2,
   size.p = 3,
+  nudge.p = 1.1,
   angle.x = 0,
   breaks.y = NULL,
-  fill,
-  jitter.width = 0.1,
+  fill = "white",
   aspect.ratio = 0.5
 )
 }
 \arguments{
 \item{dat}{a data frame}
 
-\item{levels}{level 1 must be the control group}
+\item{formula}{a formula}
 
-\item{comparison}{a numeric vector indicates which groups are used to compare with control}
-
-\item{style}{1 or 2}
+\item{comparisons}{A list of length-2 vectors specifying the groups of interest to be compared}
 
 \item{plot.B}{boolean values determining if bar plot should be drawn}
 
@@ -52,13 +49,13 @@ plotBPE_Dunn(
 
 \item{size.p}{size of p values}
 
+\item{nudge.p}{nudge of p values}
+
 \item{angle.x}{angle of x-axis text}
 
 \item{breaks.y}{breaks of y-axis}
 
 \item{fill}{fill colors}
-
-\item{jitter.width}{jitter width of the points}
 
 \item{aspect.ratio}{ratio of the x axis and y axis}
 }

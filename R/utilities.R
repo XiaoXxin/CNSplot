@@ -8,6 +8,7 @@ get_formula_right <- function(formula){
 }
 
 reconstruct_dataframe <- function(dat, formula){
+  dat <- as.data.frame(dat)
   data.frame(exp = dat[,get_formula_left(formula)],
              group = dat[,get_formula_right(formula)])
 }
@@ -24,7 +25,7 @@ p_line_x <- function(dat, comparisons){
 p_line_y <- function(dat, comparisons, nudge.p){
   levels <- levels(dat$group)
   comparisons <- lapply(comparisons, function(x) match(x, levels))
-  maxs <- dat %>% group_by(group) %>% summarise(max = max(exp))
+  maxs <- dat %>% dplyr::group_by(group) %>% dplyr::summarise(max = max(exp))
   while(length(nudge.p) < length(comparisons)){
     nudge.p <- c(nudge.p,nudge.p)
   }

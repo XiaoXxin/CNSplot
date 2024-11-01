@@ -17,7 +17,6 @@
 #' @param breaks.y breaks of y-axis
 #' @param start.y start of y-axis
 #' @param fill fill colors
-#' @param jitter.width jitter width of the points
 #' @param aspect.ratio ratio of the x axis and y axis
 #' @param nudge.p nudge of p values
 #'
@@ -42,7 +41,6 @@ plotBPE_T <- function(dat,
                       breaks.y = NULL,
                       start.y = 0,
                       fill = "white",
-                      jitter.width = 0.1,
                       aspect.ratio = 0.5){
 
   dat <- reconstruct_dataframe(dat, formula = formula)
@@ -51,7 +49,13 @@ plotBPE_T <- function(dat,
 
   res_t$y = p_line_y(dat, comparisons, nudge.p)
 
-  res_t <- cbind(res_t, p_line_x(dat, comparisons))
+  if(nrow(res_t)>1){
+    res_t <- cbind(res_t, p_line_x(dat, comparisons))
+  }else{
+    res_t$x1 <- 1
+    res_t$x2 <- 2
+    }
+
 
   if("p.adj" %in% colnames(res_t)){
     res_t$p.layout <- p_value_format(res_t$p.adj)
@@ -103,9 +107,9 @@ plotBPE_T <- function(dat,
                     width = 0.3, color = "black", alpha = 0.8, linewidth = 1)
   }
 
-  p <- p+geom_jitter(data = dat, aes(y = exp),
-                     shape = 21, size = size.point, show.legend = FALSE, color = "black",
-                     width = jitter.width)
+  p <- p+ggbeeswarm::geom_beeswarm(data = dat, aes(y = exp), cex=2,priority='density',
+                          shape = 21, size = size.point, show.legend = FALSE,
+                          color = "black")
 
   p <- p+geom_segment(data = res_t, aes(x = x1, xend = x2, y = y, yend = y),
                       linewidth = 0.3, inherit.aes = F)+
