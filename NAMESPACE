@@ -2,6 +2,7 @@
 
 export(plotBPE_Dunn)
 export(plotBPE_T)
+export(plotBPE_Tgroup)
 export(plotFC_1group)
 export(plotFC_2d)
 export(plotFC_2group)

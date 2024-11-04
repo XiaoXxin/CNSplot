@@ -1,3 +1,31 @@
+#' A function to draw bar (B) plot with point (P) and error (E) bars with t-test (groups)
+#'
+#' @param dat a data frame
+#' @param formula a formula
+#' @param color color
+#' @param plot.B boolean values determining if bar plot should be drawn
+#' @param lab.x label of x-axis
+#' @param lab.y label of y-axis
+#' @param title title
+#' @param text.x x-axis text
+#' @param size.text.x size of x-axis text
+#' @param size.text.y size of y-axis text
+#' @param size.point size of point
+#' @param size.p size of p values
+#' @param nudge.p nudge of p values
+#' @param angle.p angle of p values
+#' @param angle.x angle of x-axis text
+#' @param label.group label of samples
+#' @param expand.up expand
+#' @param expand.down expand
+#' @param start.y start of y-axis
+#' @param fill fill
+#' @param aspect.ratio ratio of the x axis and y axis
+#'
+#' @return a ggplot2 plot
+#' @export
+#'
+#' @examples
 plotBPE_Tgroup <- function(dat,
                       formula,
                       color,
@@ -14,7 +42,6 @@ plotBPE_Tgroup <- function(dat,
                       angle.p = 45,
                       angle.x = 0,
                       label.group,
-                      breaks.y = NULL,
                       expand.up = 1.5,
                       expand.down = 1.5,
                       start.y = 0,
