@@ -30,6 +30,7 @@ Collate:
     'plotBPE_Dunn.R'
     'utilities.R'
     'plotBPE_T.R'
+    'plotBPE_Tgroup.R'
     'plotFC_1group.R'
     'plotFC_2d.R'
     'plotFC_2group.R'
