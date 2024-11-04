@@ -1,4 +1,3 @@
-#' @include utilities.R
 #' A function to draw bar (B) plot with point (P) and error (E) bars with t-test
 #'
 #' @param dat a data frame
