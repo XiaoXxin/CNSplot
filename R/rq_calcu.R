@@ -1,23 +1,22 @@
-#' Title
+#' Calculate relative expression from Ct values
 #'
-#' @param exp
-#' @param group
-#' @param gene
-#' @param ct
-#' @param gene_ctrl
-#' @param sample_ctrl
+#' @param exp a data frame
+#' @param group group column
+#' @param gene gene column
+#' @param ct ct value column
+#' @param gene_ctrl contrl gene
+#' @param sample_ctrl contrl group
 #'
-#' @return
-#' @export
+#' @return a data frame of exp
 #'
-#' @examples
+#' @examples none
 rq_calcu <- function(exp, group = "group", gene = "gene", ct = "ct", gene_ctrl, sample_ctrl){
 
   colnames(exp)[colnames(exp) == group] <- "group"
   colnames(exp)[colnames(exp) == gene] <- "gene"
   colnames(exp)[colnames(exp) == ct] <- "ct"
 
-  expList <- split(exp, ~group)
+  expList <- split(exp, ~sample)
   expList <- lapply(expList, function(x) {
     ct_mean_ctrl <- mean(x$ct[x$gene == gene_ctrl])
     x <- x[x$gene != gene_ctrl,]
@@ -26,7 +25,7 @@ rq_calcu <- function(exp, group = "group", gene = "gene", ct = "ct", gene_ctrl, 
   })
   expList <- Reduce(rbind, expList)
 
-  expList <- expList <- split(expList, ~gene)
+  expList <- split(expList, ~gene)
   expList <- lapply(expList, function(y) {
     dct_mean_ctrl <- mean(y$dct[y$group == sample_ctrl])
     y$ddct <- y$dct- dct_mean_ctrl

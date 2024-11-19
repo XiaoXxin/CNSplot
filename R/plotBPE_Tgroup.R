@@ -74,10 +74,10 @@ plotBPE_Tgroup <- function(dat,
                       line.x.end = 1:nrow(res_t)+0.25)
 
   for (i in 1:nrow(res_t)) {
-    if(res_t$p[i] < 0.001){
+    if(as.numeric(res_t$p[i]) < 0.001){
       res_t$p[i] <- "p < 0.001"
     }else{
-      res_t$p[i] <- paste0("p = ", res_t$p[i])
+      res_t$p[i] <- paste0("p = ", as.numeric(res_t$p[i]))
     }
   }
 
@@ -91,8 +91,9 @@ plotBPE_Tgroup <- function(dat,
                   position = position_dodge(1), width=0.3, colour="black", alpha=0.9, linewidth =1)+
     geom_errorbar(aes(x = group, ymin=mean, ymax=mean),
                   position = position_dodge(1), width=0.5, alpha=1, linewidth = 1.6)+
-    geom_point(data = exp_sub, aes(y = exp), shape = 21, size = 2, color = "black",
-               position = position_jitterdodge(0.2, dodge.width = 1))+
+    ggbeeswarm::geom_beeswarm(data = exp_sub, aes(y = exp), cex=2,priority='density',
+                               shape = 21, size = size.point, show.legend = FALSE,
+                               color = "black", dodge.width = 1)+
     geom_segment(data = res_t, aes(x = line.x, xend = line.x.end, y = max*1.05, yend = max*1.05),
                  linewidth = 0.3, inherit.aes = F)+
     geom_text(data = res_t, aes(x = x, y = max*nudge.p, label = p),

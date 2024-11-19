@@ -2,7 +2,7 @@
 % Please edit documentation in R/rq_calcu.R
 \name{rq_calcu}
 \alias{rq_calcu}
-\title{Title}
+\title{Calculate relative expression from Ct values}
 \usage{
 rq_calcu(
   exp,
@@ -14,8 +14,24 @@ rq_calcu(
 )
 }
 \arguments{
-\item{sample_ctrl}{}
+\item{exp}{a data frame}
+
+\item{group}{group column}
+
+\item{gene}{gene column}
+
+\item{ct}{ct value column}
+
+\item{gene_ctrl}{contrl gene}
+
+\item{sample_ctrl}{contrl group}
+}
+\value{
+a data frame of exp
 }
 \description{
-Title
+Calculate relative expression from Ct values
+}
+\examples{
+none
 }
