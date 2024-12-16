@@ -37,6 +37,7 @@ plotBPE_Dunn <- function(dat,
                          nudge.p = 1.1,
                          angle.x = 0,
                          breaks.y = NULL,
+                         start.y = 0,
                          fill = "white",
                          aspect.ratio = 0.5){
 
@@ -96,7 +97,7 @@ plotBPE_Dunn <- function(dat,
           panel.grid = element_blank(),
           axis.text.x = element_text(size = size.text.x, angle = angle.x, vjust = 0.5),
           axis.text.y = element_text(size = size.text.y))+
-    coord_fixed(ylim = c(0, max(res_dunn$y)*1.1))
+    coord_fixed(ylim = c(start.y, max(res_dunn$y)*1.1))
 
   if(plot.B){
     p <- p+geom_bar(stat = "identity", color = "black", alpha = 0.6, width=0.6)+

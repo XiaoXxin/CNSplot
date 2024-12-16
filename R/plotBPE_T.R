@@ -51,8 +51,8 @@ plotBPE_T <- function(dat,
   if(nrow(res_t)>1){
     res_t <- cbind(res_t, p_line_x(dat, comparisons))
   }else{
-    res_t$x1 <- 1
-    res_t$x2 <- 2
+    res_t$x1 <- grep(res_t$group1, levels(dat$group))
+    res_t$x2 <- grep(res_t$group2, levels(dat$group))
     }
 
 

@@ -43,7 +43,7 @@ p_line_y <- function(dat, comparisons, nudge.p){
 
 p_value_format <- function(p){
   for (i in 1:length(p)) {
-    if(p[i] < 0.001){
+    if(as.numeric(p[i]) < 0.001){
       p[i] <- "p < 0.001"
     }else{
       p[i] <- paste0("p = ", round(as.numeric(p[i]), 4))

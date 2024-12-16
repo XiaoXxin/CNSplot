@@ -20,6 +20,7 @@ plotBPE_Dunn(
   nudge.p = 1.1,
   angle.x = 0,
   breaks.y = NULL,
+  start.y = 0,
   fill = "white",
   aspect.ratio = 0.5
 )
