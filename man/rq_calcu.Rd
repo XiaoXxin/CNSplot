@@ -6,17 +6,17 @@
 \usage{
 rq_calcu(
   exp,
-  group = "group",
+  sample = "sample",
   gene = "gene",
   ct = "ct",
   gene_ctrl,
-  sample_ctrl
+  group_ctrl
 )
 }
 \arguments{
 \item{exp}{a data frame}
 
-\item{group}{group column}
+\item{sample}{sample column}
 
 \item{gene}{gene column}
 
@@ -24,7 +24,7 @@ rq_calcu(
 
 \item{gene_ctrl}{contrl gene}
 
-\item{sample_ctrl}{contrl group}
+\item{group_ctrl}{contrl group}
 }
 \value{
 a data frame of exp

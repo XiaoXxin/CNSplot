@@ -1,20 +1,22 @@
 #' Calculate relative expression from Ct values
 #'
 #' @param exp a data frame
-#' @param group group column
+#' @param sample sample column
 #' @param gene gene column
 #' @param ct ct value column
 #' @param gene_ctrl contrl gene
-#' @param sample_ctrl contrl group
+#' @param group_ctrl contrl group
 #'
 #' @return a data frame of exp
 #'
 #' @examples none
-rq_calcu <- function(exp, group = "group", gene = "gene", ct = "ct", gene_ctrl, sample_ctrl){
+rq_calcu <- function(exp, sample = "sample", gene = "gene", ct = "ct", gene_ctrl, group_ctrl){
 
-  colnames(exp)[colnames(exp) == group] <- "group"
+  colnames(exp)[colnames(exp) == sample] <- "sample"
   colnames(exp)[colnames(exp) == gene] <- "gene"
   colnames(exp)[colnames(exp) == ct] <- "ct"
+
+  exp$group <- str_split(exp$sample, "_", simplify = T)[,1]
 
   expList <- split(exp, ~sample)
   expList <- lapply(expList, function(x) {
@@ -27,10 +29,10 @@ rq_calcu <- function(exp, group = "group", gene = "gene", ct = "ct", gene_ctrl, 
 
   expList <- split(expList, ~gene)
   expList <- lapply(expList, function(y) {
-    dct_mean_ctrl <- mean(y$dct[y$group == sample_ctrl])
+    dct_mean_ctrl <- mean(y$dct[y$group == group_ctrl])
     y$ddct <- y$dct- dct_mean_ctrl
     y$exp <- 2^(y$ddct*-1)
-    rq_mean_ctrl <- mean(y$exp[y$group == sample_ctrl])
+    rq_mean_ctrl <- mean(y$exp[y$group == group_ctrl])
     y$exp <- y$exp/rq_mean_ctrl
     y
   })
