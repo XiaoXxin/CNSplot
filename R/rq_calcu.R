@@ -8,6 +8,7 @@
 #' @param group_ctrl contrl group
 #'
 #' @return a data frame of exp
+#' @export
 #'
 #' @examples none
 rq_calcu <- function(exp, sample = "sample", gene = "gene", ct = "ct", gene_ctrl, group_ctrl){
@@ -39,4 +40,5 @@ rq_calcu <- function(exp, sample = "sample", gene = "gene", ct = "ct", gene_ctrl
 
   expList <- Reduce(rbind, expList)
   expList
+
 }
